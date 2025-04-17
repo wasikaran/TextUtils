@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+/* Custom switch colors */
+.form-check-input.bg-success:checked {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+}
+
+.form-check-input.bg-primary:checked {
+  background-color: #007bff !important;
+  border-color: #007bff !important;
+}
+
+.form-check-input.bg-danger:checked {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+}
+
+/* Space between switches */
+.form-switch .form-check-input {
+  margin-right: 0.5em;
+}
