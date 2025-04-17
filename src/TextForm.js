@@ -34,6 +34,7 @@ export default function TextForm(props) {
       let text = document.getElementById('myBox')
       text.select();
       navigator.clipboard.writeText(text.value);
+      document.getSelection().removeAllRanges()
       props.showAlert('Copy to clipboard', 'success')
 
     }
@@ -63,7 +64,7 @@ export default function TextForm(props) {
     <>
   <div className="mb-3" style={{color: props.mode=== 'dark'? 'white':'black'}}>
     <label htmlFor="TextArea" className="form-label">Example textarea </label>
-    <textarea className="form-control" style={{backgroundColor: props.mode=== 'dark'? 'grey':'white',color: props.mode=== 'dark'? 'white':'black'}} value={Text} onChange={handleOnChange} id="myBox" rows="8"></textarea>
+    <textarea className="form-control" style={{backgroundColor: props.mode=== 'dark'? 'lightblue':'white',color: props.mode=== 'dark'? 'white':'black'}} value={Text} onChange={handleOnChange} id="myBox" rows="8"></textarea>
     <div>
     <div className='my-3' style={{ position: 'relative', display: 'inline-block' }}>
       <button className="btn btn-info "  onClick={() => setOpen(!open)}>
@@ -86,16 +87,16 @@ export default function TextForm(props) {
           transition: 'all 0.3s ease'
         }}
       >
-    <button style={{fontSize: '13px' }} className="btn btn-primary " onClick={handleUpCLick}>Uppercase</button>
-    <button style={{ fontSize: '13px' }} className="btn btn-primary my-1 " onClick={handlelowCLick}>Lowercase</button>
-    <button style={{ fontSize: '13px' }} className="btn btn-primary  " onClick={handleSenCLick}>Sentense case</button>
-    <button style={{ fontSize: '13px' }} className="btn btn-primary my-1 " onClick={handleHEadCLick}>Heading Case</button>
+    <button disabled={Text.length === 0} style={{fontSize: '13px' }} className="btn btn-primary " onClick={handleUpCLick}>Uppercase</button>
+    <button disabled={Text.length === 0} style={{ fontSize: '13px' }} className="btn btn-primary my-1 " onClick={handlelowCLick}>Lowercase</button>
+    <button disabled={Text.length === 0} style={{ fontSize: '13px' }} className="btn btn-primary  " onClick={handleSenCLick}>Sentense case</button>
+    <button disabled={Text.length === 0} style={{ fontSize: '13px' }} className="btn btn-primary my-1 " onClick={handleHEadCLick}>Heading Case</button>
       </div>
 
     </div>
-    <button className="btn btn-primary my-2 mx-2" onClick={handleClearText}>Clear Text</button>
-    <button className="btn btn-primary my-2 mx-2" onClick={handleCopyText}>Copy Text</button>
-    <button className="btn btn-primary my-2 mx-2" onClick={handleExtraSpaces}>Remove extra spaces</button>
+    <button disabled={Text.length === 0} className="btn btn-primary my-2 mx-2" onClick={handleClearText}>Clear Text</button>
+    <button disabled={Text.length === 0} className="btn btn-primary my-2 mx-2" onClick={handleCopyText}>Copy Text</button>
+    <button disabled={Text.length === 0} className="btn btn-primary my-2 mx-2" onClick={handleExtraSpaces}>Remove extra spaces</button>
 
     </div>
 
@@ -103,9 +104,9 @@ export default function TextForm(props) {
   </div>
   <div className="container" style={{color: props.mode=== 'dark'? 'white':'black'}}>
     <h2>Your Text summary </h2>
-    <p>{Text.trim().length > 0 ? Text.trim().split(/\s+/).length : 0} words and {Text.length} characters</p>
+    <p>{Text.split(/\s+/).filter((element)=>{return element.length!=0}).length} words and {Text.length} characters</p>
     <p>{0.008 * (Text.trim().length > 0 ? Text.trim().split(/\s+/).length : 0)} minutes read</p>
-    <h3>{Text.length>0?Text: 'Enter Something to preview it here'}</h3>
+    <h3>{Text.length>0?Text: 'Nothing to preview'}</h3>
     </div></>
   )
 }

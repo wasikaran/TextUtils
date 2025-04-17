@@ -9,7 +9,6 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
   const [alert, setAlert] = useState(null);
   const [mode, setMode] = useState('light');
-  const [theme, setTheme] = useState('default');
 
   const showAlert = (message, type) => {
     setAlert({
@@ -21,12 +20,22 @@ function App() {
     }, 1500);
   };
 
-  const toggleMode = () => {
+  const removeBodyClasses = ()=> {
+    document.body.classList.remove("bg-light")
+    document.body.classList.remove("bg-dark")
+    document.body.classList.remove("bg-primary")
+    document.body.classList.remove("bg-danger")
+    document.body.classList.remove("bg-warning")
+      document.body.classList.remove("bg-success")
+
+  }
+  const toggleMode = (cls) => {
+    removeBodyClasses();
+    document.body.classList.add("bg-"+cls)
     if (mode === 'light') {
       setMode('dark');
       document.body.style.backgroundColor = '#121212';
       showAlert('Dark Mode has been enabled', 'success');
-      setTheme('default');
       document.title = 'texUtils Dark mode '
       setInterval(()=> {
         document.title = 'texUtils is amazing '
@@ -40,26 +49,7 @@ function App() {
       setMode('light');
       document.body.style.backgroundColor = 'white';
       showAlert('Light Mode has been enabled', 'success');
-      setTheme('default');
       document.title = 'texUtils Dark mode '
-    }
-  };
-
-  const changeTheme = (color) => {
-    setTheme(color);
-    
-    const colors = {
-      green: '#e8f5e9',
-      blue: '#e3f2fd',
-      red: '#ffebee',
-      default: mode === 'light' ? 'white' : '#121212'
-    };
-    
-    document.body.style.backgroundColor = colors[color] || colors.default;
-    showAlert(`${color.charAt(0).toUpperCase() + color.slice(1)} theme enabled`, 'success');
-    
-    if (color !== 'default') {
-      setMode('light');
     }
   };
 
@@ -71,15 +61,13 @@ function App() {
         about="About us"
         mode={mode}
         toggleMode={toggleMode}
-        changeTheme={changeTheme}
-        theme={theme}
       />
       <Alert alert={alert} />
 
       <div className="container my-3">
         <Routes>
-          <Route path="/Home" element={<TextForm showAlert={showAlert} mode={mode} theme={theme} />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/Home" element={<TextForm showAlert={showAlert} mode={mode} />} />
+          <Route path="/about" element={<About mode={mode}/>} />
         </Routes>
       </div>
     </Router>
