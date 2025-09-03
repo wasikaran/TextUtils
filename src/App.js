@@ -40,16 +40,16 @@ function App() {
       setInterval(()=> {
         document.title = 'texUtils is amazing '
 
-      }, 2000)
+      }, 6000)
       setInterval(()=> {
         document.title = 'texUtils is brilliant'
 
-      }, 1500)
+      }, 3500)
     } else {
       setMode('light');
       document.body.style.backgroundColor = 'white';
       showAlert('Light Mode has been enabled', 'success');
-      document.title = 'texUtils Dark mode '
+      document.title = 'texUtils light mode '
     }
   };
 
@@ -66,7 +66,7 @@ function App() {
 
       <div className="container my-3">
         <Routes>
-          <Route path="/Home" element={<TextForm showAlert={showAlert} mode={mode} />} />
+          <Route path="/" element={<TextForm showAlert={showAlert} mode={mode} />} />
           <Route path="/about" element={<About mode={mode}/>} />
         </Routes>
       </div>
